@@ -113,41 +113,38 @@
         return(false);
     }
 
+    PhotoGraph.prototype.create_button = function(p_obj, href, value, color) {
+        var a_obj = document.createElement("a");
+        a_obj.href = href;
+        var page_obj = document.createElement("input");
+        page_obj.type = "button";
+        page_obj.value = value;
+        page_obj.style = "width:110px;height:110px;font-size:50px;background:" + color + ";border:none;"; 
+        a_obj.appendChild(page_obj);
+        p_obj.appendChild(a_obj);        
+    }
+
     PhotoGraph.prototype.create_page_button = function(num) {
        
         // 空白行
         var br_obj = document.createElement("br");
         document.body.appendChild(br_obj);
-
         var p_obj = document.createElement("p");
-        // 返回按钮
-        var a_obj = document.createElement("a");
-        a_obj.href = "../index.html";
 
-        var page_obj = document.createElement("input");
-        page_obj.type = "button";
-        page_obj.value = "<";
-        page_obj.style = "width:100px;height:100px;font-size:40px;background:white;border:none;"; 
-
-        a_obj.appendChild(page_obj);
-        p_obj.appendChild(a_obj);
+        this.create_button(p_obj, "../index.html", "<", "white");
 
         // 页面选择按钮
         for (var i = 1; i <= num; i++) {
-            var a_obj = document.createElement("a");
-            a_obj.href = "photo_mb.html?page=" + i.toString();
-
-            var page_obj = document.createElement("input");
-            page_obj.type = "button";
-            page_obj.value = i.toString();
+            var href = "photo_mb.html?page=" + i.toString();
             if (i == this.page) {
-                page_obj.style = "width:100px;height:100px;font-size:40px;background:lightblue;border:none;"; 
-            } else {
-                page_obj.style = "width:100px;height:100px;font-size:40px;background:white;border:none;"; 
+                this.create_button(p_obj, href, i.toString(), "lightblue");
+            } else if (Math.abs(i-this.page) < 3) {
+                this.create_button(p_obj, href, i.toString(), "white");
+            } else if (i == 1) {
+                this.create_button(p_obj, href, "1 ...", "white");
+            } else if (i == num) {
+                this.create_button(p_obj, href, "... " + num.toString(), "white");
             }
-
-            a_obj.appendChild(page_obj);
-            p_obj.appendChild(a_obj);
         }
         document.body.appendChild(p_obj);
         // 空白行

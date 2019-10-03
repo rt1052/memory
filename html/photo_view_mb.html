@@ -35,10 +35,11 @@
 
     var Play = function(options) {
         this.page = 0;
-        this.ptr = 50;
+        this.ptr = 0;
         this.startx = 0;
         this.starty = 0;
         this.list = null;
+        this.num = 99;
         this.init();
     };
 
@@ -76,32 +77,16 @@
             var distance = endx - self.startx;
 
             if (distance > 5) {
-                if (self.ptr == 0) {
-                    self.ptr = 99;
-                } else {
+                if (self.ptr > 0) {
                     self.ptr--;
+                    self.image_load();
                 }
             } else if (distance < -5) {
-                if (self.ptr == 99) {
-                    self.ptr = 0;
-                } else {
+                if (self.ptr < self.num) {
                     self.ptr++;
+                    self.image_load();
                 }
             }
-            self.image_load();
-
-            /*
-            var img_obj = document.getElementById("main");
-            img_obj.width = "120";
-            img_obj.src = "../image/loading.gif";
-
-            var img = new Image();
-            img.src = "../media/photo/" + self.list[self.ptr].name;
-            img.onload = function() {
-                img_obj.width = "940";
-                img_obj.src = "../media/photo/" + self.list[self.ptr].name;
-            }
-            */
         }, false);        
     }
 
@@ -116,6 +101,7 @@
             async: false,        
             success: function (json_data) {
                 self.list = json_data.data;
+                //self.num = json_data.num;
             }
         });
     }

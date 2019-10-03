@@ -12,7 +12,7 @@ def make_json(dir):
     path = "../media/"+ dir + "/thumb/*.jpg"
     list = glob.glob(path)
     print(len(list))
-    data_num = 200
+    data_num = 100
     page_num = int(len(list)/data_num) + 1
 
     cnt = 0

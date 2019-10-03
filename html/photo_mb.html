@@ -26,7 +26,6 @@
     .img-m {
         border: 1px solid #ddd;
         border-radius: 5px;
-        padding: 5px;
         padding: 20px;
         width: 440px;
         height: auto;    
@@ -66,11 +65,21 @@
 }
 
 #imgLight{
+    vertical-align: middle;
   width: 100%;
   height: auto;
   -webkit-animation: change 1s;
   animation: change 1s;
   transform: rotate(0deg);  
+}
+
+.wrap {
+    width: 960px;
+    height: 1750px;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    background-color: black;
 }
 
 </style>
@@ -112,31 +121,33 @@
 
         var p_obj = document.createElement("p");
         // 返回按钮
+        var a_obj = document.createElement("a");
+        a_obj.href = "../index.html";
+
         var page_obj = document.createElement("input");
         page_obj.type = "button";
         page_obj.value = "<";
         page_obj.style = "width:100px;height:100px;font-size:40px;background:white;border:none;"; 
-        p_obj.appendChild(page_obj);
+
+        a_obj.appendChild(page_obj);
+        p_obj.appendChild(a_obj);
 
         // 页面选择按钮
         for (var i = 1; i <= num; i++) {
-            page_obj = document.createElement("input");
+            var a_obj = document.createElement("a");
+            a_obj.href = "photo_mb.html?page=" + i.toString();
+
+            var page_obj = document.createElement("input");
             page_obj.type = "button";
             page_obj.value = i.toString();
             if (i == this.page) {
-                page_obj.style = "width:100px;height:100px;font-size:40px;background:lightblue;border:none;";
+                page_obj.style = "width:100px;height:100px;font-size:40px;background:lightblue;border:none;"; 
             } else {
-                page_obj.style = "width:100px;height:100px;font-size:40px;background:white;border:none;";
-                page_obj.onclick = function(){
-                    window.history.pushState(null, null, "?page="+this.value);
-                    // 刷新页面
-                    window.location.reload();
-          // 回到页面顶端
-          $(window).scrollTop(0);
-                }               
+                page_obj.style = "width:100px;height:100px;font-size:40px;background:white;border:none;"; 
             }
 
-            p_obj.appendChild(page_obj);
+            a_obj.appendChild(page_obj);
+            p_obj.appendChild(a_obj);
         }
         document.body.appendChild(p_obj);
         // 空白行
@@ -167,11 +178,16 @@
                     var chi_obj = document.createElement("div");
                     chi_obj.className = "child";
                     chi_obj.style = "height:" + img_height.toString() + "px;";
+                    a_obj = document.createElement("a");
+                    a_obj.href = "photo_view_mb.html?page=" + self.page.toString() + "&ptr=" + i.toString();
+
                     var img_obj = document.createElement("img");
                     img_obj.className = "img-m"
                     img_obj.src = "../media/photo/thumb/" + img_name;
                     img_obj.alt = img_name;
-                    chi_obj.appendChild(img_obj);
+
+                    a_obj.appendChild(img_obj);
+                    chi_obj.appendChild(a_obj);
                     par_obj.appendChild(chi_obj);
                 }
                 document.body.appendChild(par_obj);
@@ -257,12 +273,12 @@ new PhotoGraph();
         var imgLight = document.getElementById("imgLight");
         var loader = document.getElementById("imgLoader");
         loader.style.display = "block";
-        // imgLight.src = "";
+        imgLight.src = "";
 
         var img = new Image();
         img.onload = function(){
             loader.style.display = "none";
-            imgLight.style = "margin-top: 100px";
+            //imgLight.style = "margin-top: 100px";
             imgLight.src = src;
         };
         img.src = src;
@@ -271,7 +287,7 @@ new PhotoGraph();
     window.LightBox = LightBox;
 })();
 
-new LightBox();
+//new LightBox();
 
 </script>
 
